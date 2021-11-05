@@ -13049,6 +13049,8 @@ definitions:
     type: object
   coreators.planet.blog.MsgDeleteTimedoutPostResponse:
     type: object
+  coreators.planet.blog.MsgSendIbcPostResponse:
+    type: object
   coreators.planet.blog.MsgUpdatePostResponse:
     type: object
   coreators.planet.blog.MsgUpdateSentPostResponse:
