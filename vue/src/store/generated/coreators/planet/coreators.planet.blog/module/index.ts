@@ -4,15 +4,21 @@ import { StdFee } from "@cosmjs/launchpad";
 import { SigningStargateClient } from "@cosmjs/stargate";
 import { Registry, OfflineSigner, EncodeObject, DirectSecp256k1HdWallet } from "@cosmjs/proto-signing";
 import { Api } from "./rest";
-import { MsgUpdatePost } from "./types/blog/tx";
 import { MsgDeletePost } from "./types/blog/tx";
+import { MsgUpdateSentPost } from "./types/blog/tx";
+import { MsgCreateSentPost } from "./types/blog/tx";
 import { MsgCreatePost } from "./types/blog/tx";
+import { MsgUpdatePost } from "./types/blog/tx";
+import { MsgDeleteSentPost } from "./types/blog/tx";
 
 
 const types = [
-  ["/coreators.planet.blog.MsgUpdatePost", MsgUpdatePost],
   ["/coreators.planet.blog.MsgDeletePost", MsgDeletePost],
+  ["/coreators.planet.blog.MsgUpdateSentPost", MsgUpdateSentPost],
+  ["/coreators.planet.blog.MsgCreateSentPost", MsgCreateSentPost],
   ["/coreators.planet.blog.MsgCreatePost", MsgCreatePost],
+  ["/coreators.planet.blog.MsgUpdatePost", MsgUpdatePost],
+  ["/coreators.planet.blog.MsgDeleteSentPost", MsgDeleteSentPost],
   
 ];
 export const MissingWalletError = new Error("wallet is required");
@@ -41,9 +47,12 @@ const txClient = async (wallet: OfflineSigner, { addr: addr }: TxClientOptions =
 
   return {
     signAndBroadcast: (msgs: EncodeObject[], { fee, memo }: SignAndBroadcastOptions = {fee: defaultFee, memo: ""}) => client.signAndBroadcast(address, msgs, fee,memo),
-    msgUpdatePost: (data: MsgUpdatePost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgUpdatePost", value: data }),
     msgDeletePost: (data: MsgDeletePost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgDeletePost", value: data }),
+    msgUpdateSentPost: (data: MsgUpdateSentPost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgUpdateSentPost", value: data }),
+    msgCreateSentPost: (data: MsgCreateSentPost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgCreateSentPost", value: data }),
     msgCreatePost: (data: MsgCreatePost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgCreatePost", value: data }),
+    msgUpdatePost: (data: MsgUpdatePost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgUpdatePost", value: data }),
+    msgDeleteSentPost: (data: MsgDeleteSentPost): EncodeObject => ({ typeUrl: "/coreators.planet.blog.MsgDeleteSentPost", value: data }),
     
   };
 };
