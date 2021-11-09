@@ -2,6 +2,7 @@ package keeper
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/coreators/planet/x/blog/types"
 	sdk "github.com/cosmos/cosmos-sdk/types"
@@ -72,8 +73,15 @@ func (k Keeper) OnRecvIbcPostPacket(ctx sdk.Context, packet channeltypes.Packet,
 	if err := data.ValidateBasic(); err != nil {
 		return packetAck, err
 	}
-
-	// TODO: packet reception logic
+	id := k.AppendPost(
+		ctx,
+		types.Post{
+			Creator: packet.SourcePort + "-" + packet.SourceChannel + "-" + data.Creator,
+			Title:   data.Title,
+			Content: data.Content,
+		},
+	)
+	packetAck.PostID = strconv.FormatUint(id, 10)
 
 	return packetAck, nil
 }
