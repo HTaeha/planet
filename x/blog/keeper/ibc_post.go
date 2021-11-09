@@ -120,8 +120,14 @@ func (k Keeper) OnAcknowledgementIbcPostPacket(ctx sdk.Context, packet channelty
 
 // OnTimeoutIbcPostPacket responds to the case where a packet has not been transmitted because of a timeout
 func (k Keeper) OnTimeoutIbcPostPacket(ctx sdk.Context, packet channeltypes.Packet, data types.IbcPostPacketData) error {
-
-	// TODO: packet timeout logic
+	k.AppendTimedoutPost(
+		ctx,
+		types.TimedoutPost{
+			Title:   data.Title,
+			Creator: data.Creator,
+			Chain:   packet.DestinationPort + "-" + packet.DestinationChannel,
+		},
+	)
 
 	return nil
 }
