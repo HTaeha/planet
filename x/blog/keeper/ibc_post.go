@@ -106,7 +106,7 @@ func (k Keeper) OnAcknowledgementIbcPostPacket(ctx sdk.Context, packet channelty
 			types.SentPost{
 				PostID:  packetAck.PostID,
 				Title:   data.Title,
-				Chain:   packet.DestinationPort + "-" + packet.DestinationChannel + "-",
+				Chain:   packet.DestinationPort + "-" + packet.DestinationChannel,
 				Creator: data.Creator,
 			},
 		)
